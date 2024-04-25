@@ -1,37 +1,29 @@
-/* MSc in Design and Multimedia - TI-Planets-Exploration
- *
- */
 #include <CapacitiveSensor.h>
 #define BUTTON 2
-#define piezoBuzzer 5
-#define echoPin 7  // Echo Pin
-#define trigPin 8  // Trigger Pin
-#define LEDPin 13
-
+#define echoPin 7
+#define trigPin 8
 int touch = 0;
 int x = 4;
 int y = 5;
 int z = 6;
 long ellapsed;
-float proximity; 
+float proximity;
 long buttonRandomNumber;
-CapacitiveSensor cs_7_6 = CapacitiveSensor(7, 6);  // 10M resistor between pins 7 & 6, pin 6 is sensor pin, add a wire and or foil if desired
+CapacitiveSensor cs_4_3 = CapacitiveSensor(4, 3);  // 10M resistor between pins 7 & 6, pin 6 is sensor pin, add a wire and or foil if desired
 long duration;
 
 void setup() {
   Serial.begin(9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
-  pinMode(LEDPin, OUTPUT);  // Use LED indicator (if required)
   pinMode(BUTTON, INPUT_PULLUP);
-  digitalWrite(LEDPin, HIGH);
   randomSeed(100);
-  cs_7_6.set_CS_AutocaL_Millis(0xFFFFFFFF);  // turn off autocalibrate on channel 1 - just as an example
+  cs_4_3.set_CS_AutocaL_Millis(0xFFFFFFFF);  // turn off autocalibrate on channel 1 - just as an example
 }
 
 void loop() {
   long start = millis();
-  long total = cs_7_6.capacitiveSensor(30);
+  long total = cs_4_3.capacitiveSensor(30);
   bool pressedButton = !digitalRead(BUTTON);
 
   //code for accelerometer
@@ -43,23 +35,21 @@ void loop() {
   Serial.print(" ");
 
   if (total > 150) {
-    touch = (touch + 1) % 3;  //modulo operator increments by 1 to iterate through 3 different planet shapes
+    touch = (touch + 1) % 4;  //modulo operator increments by 1 to iterate through 4 different planet views
     Serial.print(touch);
     Serial.print(" ");
-  } else{
+  } else {
     Serial.print(touch);
     Serial.print(" ");
   }
-
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
   digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH, 200000);
-  proximity = (duration * 0.034) / 2; //Calculate the distance (in cm) based on the speed of sound.
+  proximity = (duration * 0.034) / 2;  //Calculate the distance (in cm) based on the speed of sound.
 
-  //if obstacle at less 30cm distance
   if (proximity < 30) {
     //interacted with sensor so turn on one light
     Serial.print(proximity);
@@ -68,14 +58,12 @@ void loop() {
     Serial.print(30);  //sends a maximum distance of 30 if its not below 30
     Serial.print(" ");
   }
-
   //can only press this when the planet was explored (when the 3 lights are turned on) or to start the app
   if (pressedButton) {
-    buttonRandomNumber = random(7);  //maximum value of random numbers to 7 because of 7 planets
+    buttonRandomNumber = random(6);  //maximum value of random numbers to 6 because of 6 planets
     Serial.println(buttonRandomNumber);
   } else {
-      Serial.println(" ");
+    Serial.println(buttonRandomNumber);  //this will print the last state of the random number
   }
-
   delay(100);
 }
