@@ -45,35 +45,45 @@ void loop() {
   // ---
 
   // accelerometer code ---
+  // x conditions
   if (x >= -5 && x <= 5){
-    Serial.print(-1);
+    Serial.print(0);
     Serial.print(" ");
   }
+
+  else {
+    if (x < -5){  // front
+      Serial.print(1);
+      Serial.print(" ");
+    }
+    else if (x > 5){  // back
+      Serial.print(2);
+      Serial.print(" ");
+    }
+  } 
+
+  // y conditions
   if (y >= -20 && y <= 20){
-    Serial.print(-1);
+    Serial.print(0);
     Serial.print(" ");
   }
+
+  else {
+    if (y < -20){  // right
+      Serial.print(1);
+      Serial.print(" ");
+    }
+    else if (y > 20){  // left
+      Serial.print(2);
+      Serial.print(" ");
+    }
+  }
+
   Serial.print(z);
   Serial.print(" ");
 
   // normal values when not being touched "0, 4, 33" "x, y, z"
-  if (x < -5){  // front
-    Serial.print(1);
-    Serial.print(" ");
-  }
-  if (x > 5){  // back
-    Serial.print(0);
-    Serial.print(" ");
-  }
-  if (y < -20){  // right
-    Serial.print(1);
-    Serial.print(" ");
-  }
-  if (y > 20){  // left
-    Serial.print(0);
-    Serial.print(" ");
-  }
-  // ---
+
 
   if (total > 150) {
     touch = (touch + 1) % 4;  //modulo operator increments by 1 to iterate through 4 different planet views
