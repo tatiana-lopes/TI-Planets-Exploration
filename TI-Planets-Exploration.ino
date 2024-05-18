@@ -45,10 +45,14 @@ void loop() {
   // ---
 
   // accelerometer code ---
-  Serial.print(x);
-  Serial.print(" ");
-  Serial.print(y);
-  Serial.print(" ");
+  if (x >= -5 && x <= 5){
+    Serial.print(-1);
+    Serial.print(" ");
+  }
+  if (y >= -20 && y <= 20){
+    Serial.print(-1);
+    Serial.print(" ");
+  }
   Serial.print(z);
   Serial.print(" ");
 
