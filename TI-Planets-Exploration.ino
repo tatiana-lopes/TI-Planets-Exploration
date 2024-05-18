@@ -53,17 +53,21 @@ void loop() {
   Serial.print(" ");
 
   // normal values when not being touched "0, 4, 33" "x, y, z"
-  if (x < -5){
-    Serial.println(" - front - ");
+  if (x < -5){  // front
+    Serial.print(1);
+    Serial.print(" ");
   }
-  if (x > 5){
-    Serial.println(" - back - ");
+  if (x > 5){  // back
+    Serial.print(0);
+    Serial.print(" ");
   }
-  if (y < -20){
-    Serial.println(" - right - ");
+  if (y < -20){  // right
+    Serial.print(1);
+    Serial.print(" ");
   }
-  if (y > 20){
-    Serial.println(" - left - ");
+  if (y > 20){  // left
+    Serial.print(0);
+    Serial.print(" ");
   }
   // ---
 
