@@ -1,8 +1,14 @@
 #include <CapacitiveSensor.h>
+// accelerometer code ---
+#include <SPI.h>
+#include <Wire.h>
+#include <SparkFun_ADXL345.h>
+// ---
 #define BUTTON 2
 #define echoPin 7
 #define trigPin 8
 int touch = 0;
+
 int x = 4;
 int y = 5;
 int z = 6;
@@ -12,6 +18,9 @@ long buttonRandomNumber;
 CapacitiveSensor cs_4_3 = CapacitiveSensor(4, 3);  // 10M resistor between pins 7 & 6, pin 6 is sensor pin, add a wire and or foil if desired
 long duration;
 
+// accelerometer code ---
+ADXL345 adxl = ADXL345 ();
+// ---
 void setup() {
   Serial.begin(9600);
   pinMode(trigPin, OUTPUT);
@@ -19,6 +28,10 @@ void setup() {
   pinMode(BUTTON, INPUT_PULLUP);
   randomSeed(100);
   cs_4_3.set_CS_AutocaL_Millis(0xFFFFFFFF);  // turn off autocalibrate on channel 1 - just as an example
+  // accelerometer code ---
+  adxl.powerOn ();
+  adxl.setRangeSetting (16); // Defina o intervalo, valores 2, 4, 8 ou 16
+  // ---
 }
 
 void loop() {
@@ -26,13 +39,33 @@ void loop() {
   long total = cs_4_3.capacitiveSensor(30);
   bool pressedButton = !digitalRead(BUTTON);
 
-  //code for accelerometer
+  // accelerometer code ---
+  int x, y, z;
+  adxl.readAccel (& x, & y, & z);
+  // ---
+
+  // accelerometer code ---
   Serial.print(x);
   Serial.print(" ");
   Serial.print(y);
   Serial.print(" ");
   Serial.print(z);
   Serial.print(" ");
+
+  // normal values when not being touched "0, 4, 33" "x, y, z"
+  if (x < -5){
+    Serial.println(" - front - ");
+  }
+  if (x > 5){
+    Serial.println(" - back - ");
+  }
+  if (y < -20){
+    Serial.println(" - right - ");
+  }
+  if (y > 20){
+    Serial.println(" - left - ");
+  }
+  // ---
 
   if (total > 150) {
     touch = (touch + 1) % 4;  //modulo operator increments by 1 to iterate through 4 different planet views
