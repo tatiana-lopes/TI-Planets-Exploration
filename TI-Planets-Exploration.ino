@@ -53,11 +53,11 @@ void loop() {
 
   else {
     if (x < -5){  // front
-      Serial.print(1);
+      Serial.print(-1);
       Serial.print(" ");
     }
     else if (x > 5){  // back
-      Serial.print(2);
+      Serial.print(1);
       Serial.print(" ");
     }
   } 
@@ -74,7 +74,7 @@ void loop() {
       Serial.print(" ");
     }
     else if (y > 20){  // left
-      Serial.print(2);
+      Serial.print(-1);
       Serial.print(" ");
     }
   }
