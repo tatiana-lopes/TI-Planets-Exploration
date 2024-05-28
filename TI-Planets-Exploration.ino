@@ -14,7 +14,7 @@ int y = 5;
 int z = 6;
 long ellapsed;
 float proximity;
-long buttonRandomNumber = 6;
+long buttonRandomNumber = 0;
 CapacitiveSensor cs_4_3 = CapacitiveSensor(4, 3);  // 10M resistor between pins 7 & 6, pin 6 is sensor pin, add a wire and or foil if desired
 long duration;
 
@@ -68,12 +68,15 @@ void loop() {
 
   if (pressedButton == HIGH && previous == LOW && millis() - time > debounce) // add condition of (if LEDs light up != 3 then it's blocked)
   {
-    if (state == HIGH && led_group == 3) // if in screen 1, verifies the LEDs to go back to screen 0
+    if (state == HIGH && led_group == 3){
+
+    // if in screen 1, verifies the LEDs to go back to screen 0
       flag_led_1 = 0;
       flag_led_2 = 0;
       flag_led_3 = 0;
       flag_led_4 = 0;
-      state = LOW;
+      state = LOW; 
+    }
     else if (state == LOW){
       state = HIGH;
       //for (int l = 0; l < 6; l++){
@@ -216,8 +219,8 @@ void loop() {
   }
 
   Serial.print(flag_led_4);
-  Serial.print(" ");
+  Serial.println(" ");
 
 
-  delay(100);
+  delay(500);
 }
