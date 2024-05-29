@@ -183,11 +183,13 @@ void loop() {
     // desligar o led
   //}
 
-  if (total > 250) {  // if touch > 3 -> LED light up
-    if (touch > 3){
+  if (total > 250) {  // if touch = 3 -> LED light up
+ 
+    touch = (touch + 1) % 4;  //modulo operator increments by 1 to iterate through 4 different planet views
+
+    if (touch == 3){
       flag_led_2 = 1;
     }
-    touch = (touch + 1) % 4;  //modulo operator increments by 1 to iterate through 4 different planet views
     Serial.print(touch);
     Serial.print(" ");
   } else {
@@ -213,6 +215,7 @@ void loop() {
   }
 
   led_group = flag_led_1 + flag_led_2 + flag_led_3;
+  
 
   if (led_group == 3){
     flag_led_4 = 1;  // starts blinking the button LED
@@ -220,7 +223,6 @@ void loop() {
 
   Serial.print(flag_led_4);
   Serial.println(" ");
-
 
   delay(500);
 }
