@@ -90,7 +90,7 @@ void loop() {
   if (pressedButton == LOW && state == LOW){
     if (reset_aux == 0){
           Serial.print(reset_aux);  // print the reset flag
-          Serial.print("R3");
+          Serial.print(" ");
         }
   }
 
@@ -113,7 +113,7 @@ void loop() {
       if (add_planet == 6){
         reset_aux = 1;
         Serial.print(reset_aux);  // print the reset flag
-        Serial.print("R");
+        Serial.print(" ");
         state = LOW;
         for (int j = 0; j < 6; j++){
             if(visited_planets[j] != -1){
@@ -128,7 +128,7 @@ void loop() {
         state = HIGH;
         if (reset_aux == 0){
           Serial.print(reset_aux);  // print the reset flag
-          Serial.print("R3");
+          Serial.print(" ");
         }
       }
       //for (int l = 0; l < 6; l++){
@@ -288,7 +288,7 @@ void loop() {
     Serial.println(" ");
 
     Serial.print(reset_aux);  // print the reset flag
-    Serial.print("R2");
+    Serial.print(" ");
 
     delay(500);
   }
