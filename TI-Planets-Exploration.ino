@@ -82,10 +82,10 @@ void loop() {
   // ---
 
 
-  if (pressed_help_button == HIGH){
-    flag_led_1 = 1;
-    digitalWrite(LED_ACCEL, HIGH);
-  }
+  //if (pressed_help_button == HIGH){
+  //  flag_led_1 = 1;
+  //  digitalWrite(LED_ACCEL, HIGH);
+  //}
 
   if (pressedButton == LOW && state == LOW){
     if (reset_aux == 0){
@@ -182,7 +182,8 @@ void loop() {
     // x conditions
     // DEPOIS DE FAZER A CAIXA CONFIRMAR VALOOOOORESSSSS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     if (x >= -5 && x <= 5){  // LED
-      //flag_led_1 = 1;
+      flag_led_1 = 1;
+      digitalWrite(LED_ACCEL, HIGH);
       Serial.print(0);
       Serial.print(" ");
     }
