@@ -79,15 +79,7 @@ void loop() {
   // accelerometer code ---
   int x, y, z;
   adxl.readAccel (& x, & y, & z);
-  // ---
 
-
-  //if (pressed_help_button == HIGH){
-  //  flag_led_1 = 1;
-  //  digitalWrite(LED_ACCEL, HIGH);
-  //}
-
-//bug apos milisecundos de clicar para state low este serial print nao é enviado.
   if (pressedButton == LOW && state == LOW){
     if (reset_aux == 0){
           Serial.print(reset_aux);  // print the reset flag
@@ -114,7 +106,6 @@ void loop() {
       
       if (add_planet == 6){
         reset_aux = 1;
-
         Serial.print(reset_aux);  // print the reset flag
         Serial.print(" ");
         state = LOW;
@@ -128,31 +119,14 @@ void loop() {
           k = 0;
       }
       else if (add_planet != 6){
-       // reset_aux = 0;
         state = HIGH;
         if (reset_aux == 0){
           Serial.print(reset_aux);  // print the reset flag
           Serial.print(" ");
         }
       }
-      //for (int l = 0; l < 6; l++){
-      //Serial.println(visited_planets[l]);
-      //}
-
-      //if (add_planet == 6){  // already visited every planet
-      //    for (int j = 0; j < 6; j++){
-      //      if(visited_planets[j] != -1){
-      //        visited_planets[j] = -1;
-      //      }
-      //    }
-      //    add_planet = 0;
-      //    k = 0;
-      //}
 
       int random_int = random(6);  //maximum value of random numbers to 6 because of 6 planets
-      //Serial.print("random: ");
-      //Serial.print(random_int);
-      //Serial.println(" ");
       while (k < 6){
         if (visited_planets[k] == -1){
           visited_planets[k] = planets[random_int];
@@ -170,22 +144,12 @@ void loop() {
         k++;
       }
     }
-    //time = millis();
   }
 
   previous = pressedButton;
-  if (state == LOW){
- //   Serial.print(pressedButton);
-   // Serial.print(" ");
-  } else {
-   // Serial.print(0);
-    //Serial.print(" ");
-  }
-
 
   Serial.print(state); // toggle button state (if state = 0 -> ecrã 0 and if state = 1 -> ecrã 1)
   Serial.print(" ");
-
   Serial.print(buttonRandomNumber);  //this will print the last state of the random number
   Serial.print(" ");
 
@@ -199,7 +163,6 @@ void loop() {
       Serial.print(0);
       Serial.print(" ");
     }
-
     else {
       if (x < -5){  // front
         Serial.print(-1);
@@ -216,7 +179,6 @@ void loop() {
       Serial.print(0);
       Serial.print(" ");
     }
-
     else {
       if (y < -20){  // right
         Serial.print(1);
@@ -228,34 +190,8 @@ void loop() {
       }
     }
 
-    //Serial.print(z);
-    //Serial.print(" ");
-
-    // normal values when not being touched "0, 4, 33" "x, y, z"
-
-    //if (flag_led_1 == 1){
-      // ligar o led
-    //}
-    //else if (flag_led_1 == 0){
-      // desligar o led
-    //}
-    //if (flag_led_2 == 1){
-      // ligar o led
-    //}
-    //else if (flag_led_2 == 0){
-      // desligar o led
-    //}
-    //if (flag_led_3 == 1){
-      // ligar o led
-    //}
-    //else if (flag_led_3 == 0){
-      // desligar o led
-    //}
-
     if (total > 250) {  // if touch = 3 -> LED light up
-  
       touch = (touch + 1) % 4;  //modulo operator increments by 1 to iterate through 4 different planet views
-
       if (touch == 3){
         flag_led_2 = 1;
         digitalWrite(LED_CAPACITIVE, HIGH);
@@ -286,7 +222,6 @@ void loop() {
     }
 
     led_group = flag_led_1 + flag_led_2 + flag_led_3;
-    
 
     if (led_group == 3){
       flag_led_4 = 1;  // starts blinking the button LED
