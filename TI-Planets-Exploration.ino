@@ -87,10 +87,11 @@ void loop() {
   //  digitalWrite(LED_ACCEL, HIGH);
   //}
 
+//bug apos milisecundos de clicar para state low este serial print nao é enviado.
   if (pressedButton == LOW && state == LOW){
     if (reset_aux == 0){
-          Serial.print(reset_aux);  // print the reset flag
-          Serial.print(" ");
+         // Serial.print(reset_aux);  // print the reset flag
+         // Serial.print(" ");
         }
   }
 
@@ -112,8 +113,9 @@ void loop() {
     else if (state == LOW){   // if in screen 0
       if (add_planet == 6){
         reset_aux = 1;
-        Serial.print(reset_aux);  // print the reset flag
-        Serial.print(" ");
+
+       // Serial.print(reset_aux);  // print the reset flag
+        //Serial.print(" ");
         state = LOW;
         for (int j = 0; j < 6; j++){
             if(visited_planets[j] != -1){
@@ -127,8 +129,8 @@ void loop() {
       else if (add_planet != 6){
         state = HIGH;
         if (reset_aux == 0){
-          Serial.print(reset_aux);  // print the reset flag
-          Serial.print(" ");
+     //     Serial.print(reset_aux);  // print the reset flag
+       //   Serial.print(" ");
         }
       }
       //for (int l = 0; l < 6; l++){
@@ -170,6 +172,8 @@ void loop() {
   }
 
   previous = pressedButton;
+  Serial.print(pressedButton);
+  Serial.print(" ");
 
   Serial.print(state); // toggle button state (if state = 0 -> ecrã 0 and if state = 1 -> ecrã 1)
   Serial.print(" ");
@@ -287,8 +291,8 @@ void loop() {
     Serial.print(flag_led_4);
     Serial.println(" ");
 
-    Serial.print(reset_aux);  // print the reset flag
-    Serial.print(" ");
+//    Serial.print(reset_aux);  // print the reset flag
+  //  Serial.print(" ");
 
     delay(500);
   }
