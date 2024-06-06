@@ -173,9 +173,10 @@ void loop() {
         Serial.print(" ");
       }
     } 
-
+  
     // y conditions
     if (y >= -20 && y <= 20){
+
       Serial.print(0);
       Serial.print(" ");
     }
