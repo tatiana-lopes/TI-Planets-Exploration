@@ -14,6 +14,8 @@
 #define LED_PROX 9
 #define LED_ACCEL 11
 
+// order of the sent values: reset_aux, state, buttonRandomNumber , x, y, touch, proximity, flag_led_4
+
 int touch = 0;
 
 int x = 4;
@@ -25,8 +27,11 @@ long buttonRandomNumber = 0;
 CapacitiveSensor cs_4_3 = CapacitiveSensor(4, 3);  // 10M resistor between pins 7 & 6, pin 6 is sensor pin, add a wire and or foil if desired
 long duration;
 
+// initiate the array for the displayed planets
 int planets[] = {0, 1, 2, 3, 4, 5};
+// initiate an auxiliar array to know when all the planets have been explored
 int visited_planets[] = {-1, -1, -1, -1, -1, -1};
+// planets visited count
 int add_planet = 0;
 int k = 0; // iteration inside the array
 
@@ -35,7 +40,7 @@ int k = 0; // iteration inside the array
 int flag_led_1 = 0; // accel
 int flag_led_2 = 0; // capacitive
 int flag_led_3 = 0; // prox
-int led_group = 0;
+int led_group = 0; // to count the number of LEDs that are "HIGH"
 int flag_led_4 = 0; // button
 
 int state = LOW;      // the current state of the output pin
@@ -45,6 +50,7 @@ int previous = HIGH;    // the previous reading from the input pin
 unsigned long time = 0;           // the last time the output pin was toggled
 unsigned long debounce = 50UL;   // the debounce time, increase if the output flickers
 
+// auxiliar variable to reset the planets to their original state (without the textures so the user knows that they weren't explored)
 int reset_aux = 0;
 
 
@@ -87,7 +93,7 @@ void loop() {
         }
   }
 
-  if (pressedButton == HIGH && previous == LOW) // && millis() - time > debounce) // add condition of (if LEDs light up != 3 then it's blocked)
+  if (pressedButton == HIGH && previous == LOW)
   {
     if (state == HIGH && led_group == 3){  // if in screen 1 and leds all light up
 
@@ -104,22 +110,22 @@ void loop() {
     }
     else if (state == LOW){   // if in screen 0
       
-      if (add_planet == 6){
-        reset_aux = 1;
+      if (add_planet == 6){  // if all planets have been explored
+        reset_aux = 1;            // does the reset
         Serial.print(reset_aux);  // print the reset flag
         Serial.print(" ");
         state = LOW;
-        for (int j = 0; j < 6; j++){
+        for (int j = 0; j < 6; j++){  // fills the auxiliar array so it starts over
             if(visited_planets[j] != -1){
               visited_planets[j] = -1;
             }
           }
-          reset_aux = 0;
+          reset_aux = 0;              
           add_planet = 0;
           k = 0;
       }
       else if (add_planet != 6){
-        state = HIGH;
+        state = HIGH;               // goes to screen 1
         if (reset_aux == 0){
           Serial.print(reset_aux);  // print the reset flag
           Serial.print(" ");
@@ -135,7 +141,7 @@ void loop() {
           k = 0;
           break;
         }
-        else if (visited_planets[k] == planets[random_int]){
+        else if (visited_planets[k] == planets[random_int]){  // if that planet was already explored, generate another random number
           //Serial.println("already exists.");
           //Serial.println("   ");
           random_int = random(6);
@@ -148,7 +154,7 @@ void loop() {
 
   previous = pressedButton;
 
-  Serial.print(state); // toggle button state (if state = 0 -> ecrã 0 and if state = 1 -> ecrã 1)
+  Serial.print(state); // toggle button state (if state = 0 -> screen 0 and if state = 1 -> screen 1)
   Serial.print(" ");
   Serial.print(buttonRandomNumber);  //this will print the last state of the random number
   Serial.print(" ");
@@ -156,7 +162,6 @@ void loop() {
   // accelerometer code ---
   if (state == HIGH){ // screen 1
     // x conditions
-    // DEPOIS DE FAZER A CAIXA CONFIRMAR VALOOOOORESSSSS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     if (x >= -5 && x <= 5){  // LED
       flag_led_1 = 1;
       digitalWrite(LED_ACCEL, HIGH);
@@ -226,9 +231,9 @@ void loop() {
 
     if (led_group == 3){
       flag_led_4 = 1;  // starts blinking the button LED
-      digitalWrite(LED_BUTTON, HIGH);  // turn the LED on (HIGH is the voltage level)
-      delay(300);                      // wait for a second
-      digitalWrite(LED_BUTTON, LOW);   // turn the LED off by making the voltage LOW
+      digitalWrite(LED_BUTTON, HIGH);  // turn the LED on
+      delay(300);                      
+      digitalWrite(LED_BUTTON, LOW);   // turn the LED off
       delay(300); 
     }
 
