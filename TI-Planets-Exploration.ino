@@ -162,41 +162,46 @@ void loop() {
   // accelerometer code ---
   if (state == HIGH){ // screen 1
     // x conditions
-    if (x >= 0 && x < 10){  // LED
-      flag_led_1 = 1;
-      digitalWrite(LED_ACCEL, HIGH);
+    if (x >= -5 && x < 10){  // LED
       Serial.print(0);
       Serial.print(" ");
     }
     else {
       if (x < -5){  // front
+        flag_led_1 = 1;
+        digitalWrite(LED_ACCEL, HIGH);
         Serial.print(-1);
         Serial.print(" ");
       }
       else if (x >= 10){  // back
+        flag_led_1 = 1;
+        digitalWrite(LED_ACCEL, HIGH);
         Serial.print(1);
         Serial.print(" ");
       }
     } 
   
     // y conditions
-    if (y >= 30 && y <= 35){
-
+    if (y >= 30){
       Serial.print(0);
       Serial.print(" ");
     }
     else {
-      if (y < 0){  // right
+      if (y <= 0){  // right
+        flag_led_1 = 1;
+        digitalWrite(LED_ACCEL, HIGH);
         Serial.print(1);
         Serial.print(" ");
       }
       else if (y > 0 && y < 30){  // left
+        flag_led_1 = 1;
+        digitalWrite(LED_ACCEL, HIGH);
         Serial.print(-1);
         Serial.print(" ");
       }
     }
 
-    if (total > 150) {  // if touch = 3 -> LED light up
+    if (total > 250) {  // if touch = 3 -> LED light up
       touch = (touch + 1) % 4;  //modulo operator increments by 1 to iterate through 4 different planet views
       if (touch == 3){
         flag_led_2 = 1;
